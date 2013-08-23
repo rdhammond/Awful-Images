@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<title>Awful Images - Settings</title>
+		<script src="jquery.min.js"></script>
+	</head>
+
+	<body>
+		<h1><img src="img/emot-frogsiren.gif" title=":frogsiren:"> Awful Image Options!</h1>
+
+		<label>
+			<input id="rdbImgur" name="LinkType" type="radio" value="imgur">
+		</label>
+		<div id="divImgur" style="display:none;">
+			<div>
+				<label for="txtLocalPath">Local Path:</label>
+				<input id="txtLocalPath" name="LocalPath" type="text" maxlength="255">
+			</div>
+			<p><strong>Warning!</strong> The app currently isn't smart enough to track what it's uploaded recently. Don't abuse this by spamming the same image tags over and over again, because why would you.</p>
+		</div>
+
+		<label>
+			<input id="rdbPrivate" name="LinkType" type="radio" value="private">
+			Private Host URL
+		</label>
+		<div id="divPrivate" style="display:none;">
+			<div>
+				<label for="txtUrl">Base Url:</label>
+				<input id="txtUrl" name="BaseUrl" type="text" maxlength="255">
+			</div>
+			<p>Images will convert thusly: [img-bonk.gif] -&gt; <span id="spnUrl"></span>/bonk.gif</p>
+		</div>
+
+		<button id="btnSave" type="button">Save</button>
+		<script src="options.js"></script>
+	</body>
+</html>

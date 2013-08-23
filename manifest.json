@@ -1,0 +1,24 @@
+{
+	"name": "Awful Images",
+	"version": "0.0.9",
+	"description": "Replace [img-whatever] tags with appropriate [img] tags on the Someting Is Awful on the Internet dot com forums."
+	"icons": {
+		"16": "images/icon.png",
+		"48": "images/48.png",
+		"128": "images/128.png"
+	},
+	"homepage_url": "http://github.com/rdhammond/Awful-Images.git",
+	"permissions": [
+		"activeTab", "http?://forums.somethingawful.com/new*"
+	]
+	"browser_action": {
+		"default_icon": "images/icon.png",
+		"default_title": "Awful Images"
+	},
+	"background": {
+		"scripts": ["background.js"],
+		"persistent": false
+	},
+	"manifest_version": 2,
+	"options_page": "options.html"
+}

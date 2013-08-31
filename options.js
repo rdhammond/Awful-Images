@@ -1,8 +1,6 @@
 (function($) {
 	'use strict';
 
-	var LOCALSTORAGE_KEY = 'awful_image_options';
-
 	function ImageExt(value) {
 		if (typeof value === 'undefined') {
 			return $('#rdbOther').is(':checked')
@@ -38,21 +36,14 @@
 	}
 
 	function LoadOptions() {
-		var options =
-			localStorage[LOCALSTORAGE_KEY]
-			|| {
-				RootUrl: '',
-				ImageExt: 'gif',
-				Other: ''
-			}
-		;
-
-		LoadModel(options);
+		var options = chrome.storage.local.get('options', function(root) {
+			LoadModel(root.options);
+		});
 	}
 
 	function SaveOptions() {
 		var options = GetModel();
-		localStorage[LOCALSTORAGE_KEY] = options;
+		chrome.storage.local.set({options: options});
 	}
 
 	$(function() {

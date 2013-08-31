@@ -1,14 +1,13 @@
 (function($) {
 	'use strict';
 
-	var LOCALSTORAGE_KEY = 'awful_images_options';
 	var IMG_PATTERN = /\[(t?img)-([^\]]+)\]/g;
 
-	var options = null;
+	var options;
 
 	function BuildUrl(filename) {
-		return options.BaseUrl
-			? options.BaseUrl + '/' + filename
+		return options.RootUrl
+			? options.RootUrl + '/' + filename
 			: null
 		;
 	}
@@ -23,11 +22,8 @@
 			var keyword = match[1];
 			var filename = match[2];
 
-			if (filename.indexOf('.') < 0) {
-				filename += '.' + options.ImageExt === 'other'
-					? options.Other
-					: options.ImageExt
-				;
+			if (!/\./.test(filename)) {
+				filename += '.' + (options.ImageExt === 'other' ? options.Other : options.ImageExt);
 			}
 
 			var url = BuildUrl(filename);
@@ -36,18 +32,21 @@
 				result.push(text.substring(lastIndex, match.index + match[0].length));
 			}
 			else {
-				result.push(text.substring(lastIndex, match.index);
+				if (lastIndex < match.index) result.push(text.substring(lastIndex, match.index));
 				result.push('[' + keyword + ']' + url + '[/' + keyword + ']');
 			}
 
 			lastIndex = match.index + match[0].length;
 		}
 
-		return result.length > 0 ? result.join('') : text;
+		if (result.length === 0) return text;
+
+		if (lastIndex < text.length) result.push(text.substr(lastIndex));
+		return result.join('');
 	}
 
 	function SubstituteTags() {
-		if (options === null) return true;
+		if (!options) return true;
 
 		var $post = $('.post-wrapper>textarea');
 		var text = $post.val();
@@ -59,8 +58,10 @@
 	}
 
 	$(function() {
-		options = localStorage[LOCALSTORAGE_KEY];
-		$('#content>form').submit(SubstituteTags);
+		chrome.storage.local.get('options', function(root) {
+			options = root.options;
+			$('#content>form').submit(SubstituteTags);
+		});
 	});
 
 })(jQuery);

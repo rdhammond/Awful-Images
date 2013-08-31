@@ -7,28 +7,26 @@
 	<body>
 		<h1><img src="img/emot-frogsiren.gif" title=":frogsiren:"> Awful Image Options!</h1>
 
-		<label>
-			<input id="rdbImgur" name="LinkType" type="radio" value="imgur">
-		</label>
-		<div id="divImgur" style="display:none;">
-			<div>
-				<label for="txtLocalPath">Local Path:</label>
-				<input id="txtLocalPath" name="LocalPath" type="text" maxlength="255">
-			</div>
-			<p><strong>Warning!</strong> The app currently isn't smart enough to track what it's uploaded recently. Don't abuse this by spamming the same image tags over and over again, because why would you.</p>
+		<h4>Host Server Settings</h4>
+		<div>
+			<label for="txtRootUrl">Root URL:</label>
+			<input id="txtRootUrl" name="RootUrl" type="text" maxlength="255">
 		</div>
+		<p>(Point this at your <a href="http://dropbox.com">Dropbox</a> account, <a href="http://lpix.org">lpix.org</a>, what have you)</p>
 
-		<label>
-			<input id="rdbPrivate" name="LinkType" type="radio" value="private">
-			Private Host URL
-		</label>
-		<div id="divPrivate" style="display:none;">
-			<div>
-				<label for="txtUrl">Base Url:</label>
-				<input id="txtUrl" name="BaseUrl" type="text" maxlength="255">
-			</div>
-			<p>Images will convert thusly: [img-bonk.gif] -&gt; <span id="spnUrl"></span>/bonk.gif</p>
-		</div>
+		<h4>Default Image Extension>
+		<ul style="list-style-type: none; margin: 0; padding: 0">
+			<li><label><input id="rdbGif" type="radio" name="ImageExt" value="gif">GIF</label>
+			<li><label><input id="rdbPng" type="radio" name="ImageExt" value="png">PNG</label>
+			<li><label><input id="rdbJpg" type="radio" name="ImageExt" value="jpg">JPG</label>
+			<li><label><input id="rdbOther" type="radio" name="ImageExt">Other: <input id="txtOther" type="text" name="Other" maxlength="7" disabled="disabled"></label></li>
+		</ul>
+
+		<p>Sample Image URLs::</p>
+		<ul>
+			<li><strong>[img-bonk]</strong> -&gt; <strong><span class="sample-url"></span>/bonk.<span class="sample-ext"></span></strong>
+			<li><strong>[img-derp.xxx]</strong> -&gt; <strong><span class="sample-url"></span>/derp.xxx</strong>
+		</ul>
 
 		<button id="btnSave" type="button">Save</button>
 		<script src="options.js"></script>

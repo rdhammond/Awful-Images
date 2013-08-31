@@ -3,52 +3,63 @@
 
 	var LOCALSTORAGE_KEY = 'awful_image_options';
 
-	function LoadImgur(options) {
-		$('#rdbImgur').prop('checked', true);
-		$('#divImgur').show();
-		$('#txtLocalPath').val(options.LocalPath);
-		$('#divPrivate').hide();
+	function ImageExt(value) {
+		if (typeof value === 'undefined') {
+			return $('#rdbOther').is(':checked')
+				? $('#txtOther').val()
+				: $('input:radio[name="ImageExt"]:checked').val()
+			;
+		}
+
+		var $rdb = $('input:radio[name="ImageExt"][value="' + value + '"]');
+		$rdb.prop('checked', true);
+		$('#txtOther').prop('disabled', !$rdb.is('#rdbOther'));
 	}
 
-	function LoadPrivate(options) {
-		$('#divImgur').hide();
-		$('#divPrivate').show();
-		$('#rdbPrivate').prop('checked', true);
-		$('#txtBaseUrl').val(options.BaseUrl);
+	function UpdateExamples() {
+		$('.sample-url').text($('#txtRootUrl').val());
+		$('.sample-ext').text(ImageExt());
+	}
+
+	function LoadModel(options) {
+		$('#txtRootUrl').val(options.RootUrl);
+		ImageExt(options.ImageExt);
+		$('#txtOther').val(options.Other);
+
+		UpdateExamples();
+	}
+
+	function GetModel(options) {
+		return {
+			RootUrl: $('#txtRootUrl').val(),
+			ImageExt : $('input:radio[name="ImageExt"]:checked').val(),
+			Other : $('#txtOther').val()
+		};
 	}
 
 	function LoadOptions() {
 		var options =
 			localStorage[LOCALSTORAGE_KEY]
-			|| { LinkType: 'imgur', LocalPath: '' }
+			|| {
+				RootUrl: '',
+				ImageExt: 'gif',
+				Other: ''
+			}
 		;
 
-		if (options.linkType === 'imgur') {
-			LoadImgur(options);
-		}
-		else {
-			LoadPrivate(options);
-		}
+		LoadModel(options);
 	}
 
 	function SaveOptions() {
-		var options = {};
-
-		if ($('#rdbImgur').prop('checked')) {
-			options.LinkType = 'imgur';
-			options.LocalPath = $('#txtLocalPath').val();
-		}
-		else {
-			options.LinkType = 'private';
-			options.LocalPath = $('#txtBaseUrl').val();
-		}
-
+		var options = GetModel();
 		localStorage[LOCALSTORAGE_KEY] = options;
 	}
 
 	$(function() {
-		LoadOptions();
+		$('input:radio, input:text').change(UpdateExamples);
 		$('#btnSave').click(SaveOptions);
+
+		LoadOptions();
 	});
 
 })(jQuery);

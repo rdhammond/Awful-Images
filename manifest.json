@@ -1,7 +1,7 @@
 {
 	"name": "Awful Images",
-	"version": "0.0.9",
-	"description": "Replace [img-whatever] tags with appropriate [img] tags on the Someting Is Awful on the Internet dot com forums.",
+	"version": "1.0.0",
+	"description": "Replace [img-whatever] macros with appropriate [img] tags on the Someting Is Awful on the Internet dot com forums.",
 	"icons": {
 		"16": "img/icon.png",
 		"48": "img/48.png",
